@@ -17,8 +17,6 @@ sap.ui.define([
                    // inputEmployee.setDescription("OK")
                     this.byId("slCountry").setVisible(true)
                     this.byId("labelCountry").setVisible(true)
-
-
                 } else {
                     // inputEmployee.setDescription("Not OK")
                     this.byId("slCountry").setVisible(false)
