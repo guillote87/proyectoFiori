@@ -1,12 +1,16 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageToast"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
+     * @param {typeof sap.ui.model.Filter} Filter
+     * @param {typeof sap.ui.model.FilterOperator} FilterOperator
+     * @param {typeof sap.m.MessageToast} MessageToast
      */
-    function (Controller, Filter, FilterOperator) {
+    function (Controller, Filter, FilterOperator, MessageToast) {
         "use strict";
 
         function onInit() {
@@ -68,6 +72,15 @@ sap.ui.define([
         oModel.setProperty("/CountryKey","")
         }
 
+        function showPostalCode (oEvent){
+            var itemPress= oEvent.getSource()
+
+            var oContext = itemPress.getBindingContext()
+            var objectContext = oContext.getObject()
+
+            MessageToast.show(objectContext.PostalCode)
+        }
+
         var Main = Controller.extend("employees.controller.MainView", {})
         Main.prototype.onValidate = function () {
             var inputEmployee = this.byId("inputEmployee");
@@ -86,6 +99,7 @@ sap.ui.define([
         Main.prototype.onInit = onInit
         Main.prototype.onFilter = onFilter
         Main.prototype.onClearFilter= onClearFilter
+        Main.prototype.showPostalCode = showPostalCode
         return Main
     });
 
