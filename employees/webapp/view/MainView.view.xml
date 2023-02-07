@@ -35,7 +35,7 @@
                             </Column>
                         </columns>
                         <items>
-                            <ColumnListItem type="Active" press="onShowPostalCode">
+                            <ColumnListItem type="Active" press="onShowOrders">
                                 <cells>
                                     <Label text="{jsonEmployees>EmployeeID}" />
                                     <Label text="{jsonEmployees>LastName},{jsonEmployees>FirstName}" />
@@ -45,6 +45,7 @@
                             </ColumnListItem>
                         </items>
                     </Table>
+                    <HBox id="ordersTable"></HBox>
                 </Panel>
             </HBox>
         </content>
