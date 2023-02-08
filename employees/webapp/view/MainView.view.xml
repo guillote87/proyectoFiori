@@ -13,41 +13,7 @@
                 <Button id="buttonFilter" text="{i18n>buttonFilter}" icon="sap-icon://search" press="onFilter" class="sapUiSmallMarginEnd" />
                 <Button id="buttonClear" text="{i18n>buttonClear}" icon="sap-icon://clear-filter" press="onClearFilter" class="sapUiSmallMarignEnd" />
             </HBox>
-            <HBox>
-                <Panel>
-                    <Button id="btnShowCity" text="{i18n>showCity}" visible="{jsonConfig>/visibleBtnShowCity}" press="onShowCity" />
-                    <Button id="btnHideCity" text="{i18n>hideCity}" visible="{jsonConfig>/visibleBtnHideCity}" press="onHideCity" />
-                    <Table id="tableEmployee" items="{jsonEmployees>/Employees}">
-                        <columns>
-                            <Column visible="{jsonConfig>/visibleID}">
-                                <header>
-                                    <Label text="{i18n>tableId}" />
-                                </header>
-                            </Column>
-                            <Column visible="{jsonConfig>/visibleName}">
-                                <Label text="{i18n>tableName}" />
-                            </Column>
-                            <Column visible="{jsonConfig>/visibleCountry}">
-                                <Label text="{i18n>tableCountry}" />
-                            </Column>
-                            <Column visible="{jsonConfig>/visibleCity}">
-                                <Label text="{i18n>tableCity}"  />
-                            </Column>
-                        </columns>
-                        <items>
-                            <ColumnListItem type="Active" press="onShowOrders">
-                                <cells>
-                                    <Label text="{jsonEmployees>EmployeeID}" />
-                                    <Label text="{jsonEmployees>LastName},{jsonEmployees>FirstName}" />
-                                    <Label text="{jsonEmployees>Country}" />
-                                    <Label text="{jsonEmployees>City}" />
-                                </cells>
-                            </ColumnListItem>
-                        </items>
-                    </Table>
-                    <HBox id="ordersTable"></HBox>
-                </Panel>
-            </HBox>
+            <core:Fragment fragmentName="employees.fragment.TableEmployee" type="XML"/>
         </content>
     </Page>
 </mvc:View>

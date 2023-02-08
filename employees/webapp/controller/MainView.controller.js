@@ -85,7 +85,7 @@ sap.ui.define([
             oJSONModelConfig.setProperty("/visibleBtnHideCity", false)
         }
 
-        function onShowOrders(oEvent) {
+        function onShowOrders2(oEvent) {
             var ordersTable = this.getView().byId("ordersTable")
 
             ordersTable.destroyItems()
@@ -173,6 +173,27 @@ sap.ui.define([
 
         }
 
+
+
+        function onShowOrders(oEvent) {
+            //Obtenemos el controlador
+            var IconPressed = oEvent.getSource()
+            var oContext = IconPressed.getBindingContext("jsonEmployees")
+
+            if (!this._oDialogOrders) {
+                this._oDialogOrders = sap.ui.xmlfragment("employees.fragment.DialogOrders", this)
+                this.getView().addDependent(this._oDialogOrders)
+            }
+            // hacer el binding y acceder a los datos del elemento seleccionado
+
+            this._oDialogOrders.bindElement("jsonEmployees>" + oContext.getPath())
+            this._oDialogOrders.open()
+
+        }
+        function onCloseOrders() {
+            this._oDialogOrders.close()
+        }
+
         var Main = Controller.extend("employees.controller.MainView", {})
         Main.prototype.onValidate = function () {
             var inputEmployee = this.byId("inputEmployee");
@@ -195,6 +216,7 @@ sap.ui.define([
         Main.prototype.onShowCity = onShowCity
         Main.prototype.onHideCity = onHideCity
         Main.prototype.onShowOrders = onShowOrders
+        Main.prototype.onCloseOrders = onCloseOrders
         return Main
     });
 
