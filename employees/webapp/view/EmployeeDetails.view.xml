@@ -24,25 +24,35 @@
                         <Text text="{i18n>countryCode}" class="boldText sapUiTinyMarginEnd" />
                         <Text text="{jsonEmployees>Country}" />
                         <layoutData>
-                           <FlexItemData growFactor="3"></FlexItemData>
+                            <FlexItemData growFactor="3" />
                         </layoutData>
                     </HBox>
                     <HBox>
                         <Text text="{i18n>city}" class="boldText sapUiTinyMarginEnd" />
                         <Text text="{jsonEmployees>City}" />
-                         <layoutData>
-                           <FlexItemData growFactor="2"></FlexItemData>
+                        <layoutData>
+                            <FlexItemData growFactor="2" />
                         </layoutData>
                     </HBox>
                     <FlexBox direction="Row" alignItems="Start">
                         <Text text="{i18n>postalCode}" class="boldText sapUiTinyMarginEnd" />
                         <Text text="{jsonEmployees>PostalCode}" />
-                         <layoutData>
-                           <FlexItemData growFactor="1"></FlexItemData>
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
                         </layoutData>
                     </FlexBox>
                 </items>
             </FlexBox>
+        </Panel>
+        <Panel class="sapUiSizeCompact" backgroundDesign="Transparent">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="{i18n>incidence} {= ${jsonEmployees>Country} !=='US' ? ${i18n>europe} : ${i18n>us}}" />
+                    <ToolbarSpacer />
+                    <Button text="{i18n>createIncidence}" press="onCreateIncidence" />
+                </Toolbar>
+            </headerToolbar>
+            <Panel id="tableIncidence" class="sapUiNoContentPadding" backgroundDesign="Translucent" />
         </Panel>
     </Page>
 </mvc:View>
