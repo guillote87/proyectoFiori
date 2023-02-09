@@ -14,27 +14,7 @@ sap.ui.define([
         "use strict";
 
         function onInit() {
-
-            var oView = this.getView()
-
-
-            var oJSONModelEmp = new sap.ui.model.json.JSONModel();
-            oJSONModelEmp.loadData("../localService/mockdata/Employees.json", false)
-            oView.setModel(oJSONModelEmp, "jsonEmployees")
-
-            var oJSONModelCountries = new sap.ui.model.json.JSONModel();
-            oJSONModelCountries.loadData("../localService/mockdata/Countries.json", false)
-            oView.setModel(oJSONModelCountries, "jsonCountries")
-
-            var oJSONModelConfig = new sap.ui.model.json.JSONModel({
-                visibleID: true,
-                visibleName: true,
-                visibleCountry: true,
-                visibleCity: false,
-                visibleBtnShowCity: true,
-                visibleBtnHideCity: false
-            });
-            oView.setModel(oJSONModelConfig, "jsonConfig")
+            this._bus = sap.ui.getCore().getEventBus()
         }
 
         function onFilter() {
@@ -194,7 +174,14 @@ sap.ui.define([
             this._oDialogOrders.close()
         }
 
-        var Main = Controller.extend("employees.controller.MainView", {})
+        function onShowEmployee(oEvent) {
+            var path = oEvent.getSource().getBindingContext("jsonEmployees").getPath()
+            this._bus.publish("flexible","showEmployee",path)
+
+        }
+
+
+        var Main = Controller.extend("employees.controller.MasterEmployee", {})
         Main.prototype.onValidate = function () {
             var inputEmployee = this.byId("inputEmployee");
             var valueEmployee = inputEmployee.getValue();
@@ -217,6 +204,7 @@ sap.ui.define([
         Main.prototype.onHideCity = onHideCity
         Main.prototype.onShowOrders = onShowOrders
         Main.prototype.onCloseOrders = onCloseOrders
+        Main.prototype.onShowEmployee = onShowEmployee
         return Main
     });
 

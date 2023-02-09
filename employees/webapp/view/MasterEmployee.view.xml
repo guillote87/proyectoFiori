@@ -1,7 +1,7 @@
-<mvc:View controllerName="employees.controller.MainView" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:core="sap.ui.core" xmlns="sap.m">
+<mvc:View controllerName="employees.controller.MasterEmployee" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:core="sap.ui.core" xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
         <content>
-            <HBox>
+            <HBox wrap="Wrap">
                 <Label id="labelEmployee" text="{i18n>labelEmployee}" labelFor="inputEmployee" class="sapUiSmallMargin" />
                 <Input id="inputEmployee" value="{jsonCountries>/EmployeeId}" maxLength="10" width="200px" class="sapUiSmallMarginEnd" />
                 <Label id="labelCountry" text="{i18n>labelCountry}" labelFor="slCountry" class="sapUiSmallMargin" visible="true" />
@@ -13,7 +13,7 @@
                 <Button id="buttonFilter" text="{i18n>buttonFilter}" icon="sap-icon://search" press="onFilter" class="sapUiSmallMarginEnd" />
                 <Button id="buttonClear" text="{i18n>buttonClear}" icon="sap-icon://clear-filter" press="onClearFilter" class="sapUiSmallMarignEnd" />
             </HBox>
-            <core:Fragment fragmentName="employees.fragment.TableEmployee" type="XML"/>
+            <core:Fragment fragmentName="employees.fragment.TableEmployee" type="XML" />
         </content>
     </Page>
 </mvc:View>
