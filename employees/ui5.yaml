@@ -18,6 +18,8 @@ server:
         backend:
           - path: /v2
             url: https://services.odata.org
+          - path: /sap
+            url: http://erp13.sap4practice.com:9037
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

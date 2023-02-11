@@ -45,7 +45,7 @@ sap.ui.define([
         function onShowPostalCode(oEvent) {
             var itemPress = oEvent.getSource()
 
-            var oContext = itemPress.getBindingContext("jsonEmployees")
+            var oContext = itemPress.getBindingContext("odataNorthwind")
             var objectContext = oContext.getObject()
 
             MessageToast.show(objectContext.PostalCode)
@@ -71,7 +71,7 @@ sap.ui.define([
             ordersTable.destroyItems()
 
             var itemPress = oEvent.getSource()
-            var oContext = itemPress.getBindingContext("jsonEmployees")
+            var oContext = itemPress.getBindingContext("odataNorthwind")
 
             var objectContext = oContext.getObject()
             var orders = objectContext.Orders
@@ -129,25 +129,25 @@ sap.ui.define([
             var columnListItem = new sap.m.ColumnListItem();
 
             var cellOrderID = new sap.m.Label();
-            cellOrderID.bindProperty("text", "jsonEmployees>OrderID");
+            cellOrderID.bindProperty("text", "odataNorthwind>OrderID");
             columnListItem.addCell(cellOrderID);
 
             var cellFreight = new sap.m.Label();
-            cellFreight.bindProperty("text", "jsonEmployees>Freight");
+            cellFreight.bindProperty("text", "odataNorthwind>Freight");
             columnListItem.addCell(cellFreight);
 
             var cellShipAddress = new sap.m.Label();
-            cellShipAddress.bindProperty("text", "jsonEmployees>ShipAddress");
+            cellShipAddress.bindProperty("text", "odataNorthwind>ShipAddress");
             columnListItem.addCell(cellShipAddress);
 
 
             var oBindingInfo = {
-                model: "jsonEmployees",
+                model: "odataNorthwind",
                 path: "Orders",
                 template: columnListItem
             }
             newTableJSON.bindAggregation("items", oBindingInfo)
-            newTableJSON.bindElement("jsonEmployees>" + oContext.getPath())
+            newTableJSON.bindElement("odataNorthwind>" + oContext.getPath())
 
             ordersTable.addItem(newTableJSON)
 
@@ -158,7 +158,7 @@ sap.ui.define([
         function onShowOrders(oEvent) {
             //Obtenemos el controlador
             var IconPressed = oEvent.getSource()
-            var oContext = IconPressed.getBindingContext("jsonEmployees")
+            var oContext = IconPressed.getBindingContext("odataNorthwind")
 
             if (!this._oDialogOrders) {
                 this._oDialogOrders = sap.ui.xmlfragment("employees.fragment.DialogOrders", this)
@@ -166,7 +166,7 @@ sap.ui.define([
             }
             // hacer el binding y acceder a los datos del elemento seleccionado
 
-            this._oDialogOrders.bindElement("jsonEmployees>" + oContext.getPath())
+            this._oDialogOrders.bindElement("odataNorthwind>" + oContext.getPath())
             this._oDialogOrders.open()
 
         }
@@ -175,7 +175,7 @@ sap.ui.define([
         }
 
         function onShowEmployee(oEvent) {
-            var path = oEvent.getSource().getBindingContext("jsonEmployees").getPath()
+            var path = oEvent.getSource().getBindingContext("odataNorthwind").getPath()
             this._bus.publish("flexible","showEmployee",path)
 
         }
