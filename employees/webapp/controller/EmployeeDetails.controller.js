@@ -1,7 +1,8 @@
 sap.ui.define([
     'sap/ui/core/mvc/Controller',
-    'employees/model/formatter'
-], function (Controller, formatter) {
+    'employees/model/formatter',
+    'sap/m/MessageBox'
+], function (Controller, formatter, MessageBox) {
 
 
     function onInit() {
@@ -14,19 +15,32 @@ sap.ui.define([
         var incidenceModel = this.getView().getModel("incidenceModel")
         var odata = incidenceModel.getData()
         var index = odata.length
-        odata.push({ index: index + 1 })
+        //Validaciones de campos  _ValidateDate y anulo boton Save
+        odata.push({ index: index + 1, _ValidateDate: false, EnabledSave: false })
+
+
         incidenceModel.refresh()
         newIncidence.bindElement("incidenceModel>/" + index)
         tableIncidence.addContent(newIncidence)
     }
     function onDeleteIncidence(oEvent) {
+        let oResourceBundle = this.getView().getModel("i18n").getResourceBundle()
+
         var oContext = oEvent.getSource().getBindingContext("incidenceModel").getObject()
 
-        this._bus.publish("incidence", "onDeleteIncidence", {
-            IncidenceId: oContext.IncidenceId,
-            SapId: oContext.SapId,
-            EmployeeId: oContext.EmployeeId
-        })
+        //Manejamos la confirmacion del mensaje de confirmacion del delete
+        MessageBox.confirm(oResourceBundle.getText("confirmDeleteIncidence"), {
+            onClose: function (oAction) {
+
+                if (oAction === "OK") {
+                    this._bus.publish("incidence", "onDeleteIncidence", {
+                        IncidenceId: oContext.IncidenceId,
+                        SapId: oContext.SapId,
+                        EmployeeId: oContext.EmployeeId
+                    })
+                }
+        }.bind(this)
+    })
 
     }
     function onSaveIncidence(oEvent) {
@@ -37,19 +51,71 @@ sap.ui.define([
         })
     }
     function updateIncidenceCreationDate(oEvent) {
-        var context = oEvent.getSource().getBindingContext("incidenceModel")
-        var oContext = context.getObject()
-        oContext.CreationDateX = true
+        let oResourceBundle = this.getView().getModel("i18n").getResourceBundle()
+        let context = oEvent.getSource().getBindingContext("incidenceModel")
+        let oContext = context.getObject()
+
+        if (!oEvent.getSource().isValidValue()) {
+            oContext._ValidateDate = false
+            oContext.CreationDateState = "Error"
+            MessageBox.error(oResourceBundle.getText("errorCreationDateValue"), {
+                title: "Error",
+                onClose: null,
+                styleClass: "",
+                actions: MessageBox.Action.Close,
+                emphasizedAction: null,
+                initialFocus: null,
+                textDirection: sap.ui.core.TextDirection.Inherit
+            })
+        } else {
+            oContext._ValidateDate = true
+            oContext.CreationDateState = "None"
+            oContext.CreationDateX = true
+        }
+
+        //Validamos que haya fecha valida y valor introducido en Reason para habilitar el Boton Save
+
+        if (oEvent.getSource().isValidValue() && oContext.Reason) {
+            oContext.EnabledSave = true
+        } else {
+            oContext.EnabledSave = false
+        }
+        context.getModel().refresh()
     }
     function updateIncidenceReason(oEvent) {
-        var context = oEvent.getSource().getBindingContext("incidenceModel")
-        var oContext = context.getObject()
-        oContext.ReasonX = true
+        let context = oEvent.getSource().getBindingContext("incidenceModel")
+        let oContext = context.getObject()
+
+        //Validaciones
+        if (oEvent.getSource().getValue()) {
+            oContext.ReasonX = true
+            oContext.ReasonState = "None"
+        } else {
+            oContext.ReasonState = "Error"
+        }
+
+        //Validamos que haya fecha valida y valor introducido en Reason para habilitar el Boton Save
+        if (oContext._ValidateDate && oEvent.getSource().getValue()) {
+            oContext.EnabledSave = true
+        } else {
+            oContext.EnabledSave = false
+        }
+
+        context.getModel().refresh()
     }
     function updateIncidenceType(oEvent) {
         var context = oEvent.getSource().getBindingContext("incidenceModel")
         var oContext = context.getObject()
+
+        //Validamos que haya fecha valida y valor introducido en Reason para habilitar el Boton Save
+        if (oContext._ValidateDate && oContext.Reason) {
+            oContext.EnabledSave = true
+        } else {
+            oContext.EnabledSave = false
+        }
         oContext.TypeX = true
+        context.getModel().refresh()
+
     }
 
     var EmployeesDetail = Controller.extend("employees.controller.EmployeesDetail", {})
