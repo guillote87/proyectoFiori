@@ -117,6 +117,14 @@ sap.ui.define([
         context.getModel().refresh()
 
     }
+    function toOrderDetails(oEvent) {
+        let orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID
+
+        let oRouter = sap.ui.core.UIComponent.getRouterFor(this)
+        oRouter.navTo("RouteOrderDetails",{
+            OrderID: orderID
+        })
+    }
 
     var EmployeesDetail = Controller.extend("employees.controller.EmployeesDetail", {})
 
@@ -128,6 +136,7 @@ sap.ui.define([
     EmployeesDetail.prototype.updateIncidenceCreationDate = updateIncidenceCreationDate
     EmployeesDetail.prototype.updateIncidenceReason = updateIncidenceReason
     EmployeesDetail.prototype.updateIncidenceType = updateIncidenceType
+    EmployeesDetail.prototype.toOrderDetails = toOrderDetails
     EmployeesDetail.prototype.Formatter = formatter
 
     return EmployeesDetail

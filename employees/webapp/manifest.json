@@ -125,6 +125,13 @@
           "target": [
             "TargetMainView"
           ]
+        },
+        {
+          "name": "RouteOrderDetails",
+          "pattern": "OrderDetail/{OrderID}",
+          "target": [
+            "TargetOrderDetails"
+          ]
         }
       ],
       "targets": {
@@ -135,13 +142,11 @@
           "viewId": "Main",
           "viewName": "Main"
         },
-        "TargetMasterEmployee": {
+        "TargetOrderDetails": {
           "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "MasterEmployee",
-          "viewName": "MasterEmployee"
+          "viewName": "OrderDetails"
         }
+        
       }
     },
     "rootView": {

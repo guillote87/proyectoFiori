@@ -176,26 +176,22 @@ sap.ui.define([
 
         function onShowEmployee(oEvent) {
             var path = oEvent.getSource().getBindingContext("odataNorthwind").getPath()
-            this._bus.publish("flexible","showEmployee",path)
+            this._bus.publish("flexible", "showEmployee", path)
 
         }
+        function toOrderDetails(oEvent) {
+            let orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID
 
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this)
+            oRouter.navTo("RouteOrderDetails",{
+                OrderID: orderID
+            })
+
+        }
+        
 
         var Main = Controller.extend("employees.controller.MasterEmployee", {})
-        Main.prototype.onValidate = function () {
-            var inputEmployee = this.byId("inputEmployee");
-            var valueEmployee = inputEmployee.getValue();
 
-            if (valueEmployee.length === 6) {
-                //inputEmployee.setDescription("OK");
-                this.getView().byId("labelCountry").setVisible(true);
-                this.getView().byId("slCountry").setVisible(true);
-            } else {
-                //inputEmployee.setDescription("Not OK");
-                this.getView().byId("labelCountry").setVisible(false);
-                this.getView().byId("slCountry").setVisible(false);
-            }
-        };
         Main.prototype.onInit = onInit
         Main.prototype.onFilter = onFilter
         Main.prototype.onClearFilter = onClearFilter
@@ -205,6 +201,7 @@ sap.ui.define([
         Main.prototype.onShowOrders = onShowOrders
         Main.prototype.onCloseOrders = onCloseOrders
         Main.prototype.onShowEmployee = onShowEmployee
+        Main.prototype.toOrderDetails = toOrderDetails
         return Main
     });
 
