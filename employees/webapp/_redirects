@@ -1,1 +1,2 @@
 /sap/opu/odata/sap/YSAPUI5_SRV_01/* http://erp13.sap4practice.com:9037/sap/opu/odata/sap/YSAPUI5_SRV_01/:splat 200
+/v2/northwind/northwind.svc/* https://services.odata.org//v2/northwind/northwind.svc/:splat 200
